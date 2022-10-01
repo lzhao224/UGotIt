@@ -1,6 +1,8 @@
 import cv2
 import os
-#train
+
+face_haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
 videos = ['Confused','Engaged','Not_interested','Thinking']
 os.mkdir("test")
 os.mkdir("train")
@@ -11,15 +13,19 @@ for video in videos:
     success,image = vidcap.read()
     count = 0
     dim  = image.shape
-    left = int((dim[1]-dim[0])/2)
-    right = int((dim[1]-dim[0])/2 + dim[0])
+    
     while success:
-        image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-        image = image[:, left:right]
-        image = cv2.resize(image, (224, 224))
-        if count%40 == 0:
-            cv2.imwrite("test/"+video+"/frame%d.jpg" % int(count/40), image)     # save frame as JPEG file      
-        elif count%10 == 0:
-            cv2.imwrite("train/"+video+"/frame%d.jpg" % int(count/10), image)     # save frame as JPEG file      
+        if count%10==0:
+            get_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            faces_detected = face_haar_cascade.detectMultiScale(get_image, 1.32, 5)
+            for (x, y, w, h) in faces_detected:
+                image = roi_gray = image[y:y + w, x:x + h] 
+
+            image = cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
+            image = cv2.resize(image, (224, 224))
+            if count%40 == 0:
+                cv2.imwrite("test/"+video+"/frame%d.jpg" % int(count/40), image)     # save frame as JPEG file      
+            elif count%10 == 0:
+                cv2.imwrite("train/"+video+"/frame%d.jpg" % int(count/10), image)     # save frame as JPEG file      
         success,image = vidcap.read()
         count += 1
