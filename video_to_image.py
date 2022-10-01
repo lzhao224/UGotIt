@@ -21,11 +21,11 @@ for video in videos:
             for (x, y, w, h) in faces_detected:
                 image = roi_gray = image[y:y + w, x:x + h] 
 
-            image = cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
-            image = cv2.resize(image, (224, 224))
-            if count%40 == 0:
-                cv2.imwrite("test/"+video+"/frame%d.jpg" % int(count/40), image)     # save frame as JPEG file      
-            elif count%10 == 0:
-                cv2.imwrite("train/"+video+"/frame%d.jpg" % int(count/10), image)     # save frame as JPEG file      
+                image = cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
+                image = cv2.resize(image, (224, 224))
+                if count%40 == 0:
+                    cv2.imwrite("test/"+video+"/frame%d.jpg" % int(count/40), image)     # save frame as JPEG file      
+                elif count%10 == 0:
+                    cv2.imwrite("train/"+video+"/frame%d.jpg" % int(count/10), image)     # save frame as JPEG file      
         success,image = vidcap.read()
         count += 1
