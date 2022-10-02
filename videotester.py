@@ -27,6 +27,8 @@ while True:
 
     faces_detected = face_haar_cascade.detectMultiScale(gray_img, 1.32, 5)
 
+    emotions_cnt = {'Confused':0, 'Engaged':0, 'Not_interested':0, 'Thinking':0}
+    total_score = 0
     for (x, y, w, h) in faces_detected:
         cv2.rectangle(test_img, (x, y), (x + w, y + h), (255, 0, 0), thickness=7)
         roi_gray = gray_img[y:y + w, x:x + h]  # cropping region of interest i.e. face area from  image
@@ -42,10 +44,27 @@ while True:
 
         emotions = ('Confused', 'Engaged', 'Not_interested', 'Thinking')
         predicted_emotion = emotions[max_index]
-
+        emotions_cnt[predicted_emotion] += 1
         cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-
+    
     resized_img = cv2.resize(test_img, (1000, 700))
+
+    numFaces = len(faces_detected)
+
+    font                   = cv2.FONT_HERSHEY_SIMPLEX
+    bottomLeftCornerOfText = (10,665)
+    fontScale              = 0.7
+    fontColor              = (30,255,255)
+    thickness              = 2
+    lineType               = 2
+
+    cv2.putText(resized_img,'Student Count: '+str(numFaces)+ " Not Interested: "+str(emotions_cnt['Not_interested']) +" Confused: "+str(emotions_cnt['Confused']) + " Thinking: "+str(emotions_cnt['Thinking']) + " Engaged: "+str(emotions_cnt['Engaged']), 
+        bottomLeftCornerOfText, 
+        font, 
+        fontScale,
+        fontColor,
+        thickness,
+        lineType)
     cv2.imshow('Facial emotion analysis ', resized_img)
 
     if cv2.waitKey(10) == ord('q'):  # wait until 'q' key is pressed
