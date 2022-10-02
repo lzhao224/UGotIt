@@ -33,7 +33,7 @@ while True:
     #    continue
     win32gui.EnumWindows(enum_cb, toplist)
     # print(winlist)
-    chrome = [(hwnd, title) for hwnd, title in winlist if 'youtube' in title.lower()]
+    chrome = [(hwnd, title) for hwnd, title in winlist if 'chrome' in title.lower()]
     # just grab the hwnd for first window matching chrome
     #chrome = chrome[0]
     hwnd = chrome[0][0]
