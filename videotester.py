@@ -13,6 +13,7 @@ import numpy as np
 
 # load model
 model = load_model("my_model1.h5") #change to our model
+background = cv2.imread('background.png')
 
 
 
@@ -68,6 +69,50 @@ while True:
         thickness,
         lineType)
     cv2.imshow('Facial emotion analysis ', resized_img)
+
+
+    xpos = 20
+    stats = cv2.resize(background, (300, 200))
+    cv2.putText(stats,'Student Count: '+str(numFaces), 
+        (xpos, 30), 
+        font, 
+        0.7,
+        (0, 0, 0),
+        2,
+        1)
+
+    cv2.putText(stats,'Engaged: '+str(emotions_cnt['Engaged']), 
+        (xpos, 60), 
+        font, 
+        0.7,
+        (100, emotions_cnt['Engaged']/(numFaces if numFaces else 1)*255, 255-emotions_cnt['Engaged']/(numFaces if numFaces else 1)*255),
+        2,
+        1)
+
+    cv2.putText(stats,'Thinking: '+str(emotions_cnt['Thinking']), 
+        (xpos, 90), 
+        font, 
+        0.7,
+        (100, emotions_cnt['Thinking']/(numFaces if numFaces else 1)*255, 255-emotions_cnt['Thinking']/(numFaces if numFaces else 1)*255),
+        2,
+        1)
+
+    cv2.putText(stats,'Confused: '+str(emotions_cnt['Confused']), 
+        (xpos, 120), 
+        font, 
+        0.7,
+        (100, 255-emotions_cnt['Confused']/(numFaces if numFaces else 1)*255, emotions_cnt['Confused']/(numFaces if numFaces else 1)*255),
+        2,
+        1)
+
+    cv2.putText(stats,'Not Interested: '+str(emotions_cnt['Not_interested']), 
+        (xpos, 150), 
+        font, 
+        0.7,
+        (100, 255-emotions_cnt['Not_interested']/(numFaces if numFaces else 1)*255, emotions_cnt['Not_interested']/(numFaces if numFaces else 1)*255),
+        2,
+        1)
+    cv2.imshow('Engagement Stats', stats)
 
     if cv2.waitKey(10) == ord('q'):  # wait until 'q' key is pressed
         break
