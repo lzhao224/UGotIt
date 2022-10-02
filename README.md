@@ -13,3 +13,12 @@ Detects faces through webcam or browser window and identifies the emotion as eng
 ### Challenges
 The major challenge is data collection. We need a large set of labeled data for a better training result. This isn't easy to collect within the time frame of this Hackathon. We made a program to convert any video source to a set of labeled images as training and testing data. We recorded the faces of our team members as the training and testing data. In the future, more data needs to be collected for this application.
 
+### To run the project
+1. Install `Python3`, `OpenCV`, `numpy`, and `TensorFlow`.
+2. To activate the webcam feature, simply run `webcam_detect.py`.
+3. To activate the screen capture feature(only on Chrome for now), simply run `screencap_detect.py`.
+
+### Sources
+Cover Photo Citation: https://www.youtube.com/watch?v=EgSASyMJrWE
+OpenCV Code Citation: https://github.com/dhruvpandey662/Emotion-detection
+Screen Capture Citation: https://github.com/dhruvpandey662/Emotion-detection
