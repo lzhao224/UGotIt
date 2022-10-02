@@ -1,3 +1,5 @@
+# camera and image processing code: https://github.com/dhruvpandey662/Emotion-detection
+
 import os
 import cv2
 import numpy as np
